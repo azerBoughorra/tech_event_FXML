@@ -17,9 +17,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -31,7 +33,7 @@ public class LoginController implements Initializable {
     /**
      * Initializes the controller class.
      */
- @FXML
+    @FXML
     private Label label;
     @FXML
     private Button button;
@@ -40,34 +42,39 @@ public class LoginController implements Initializable {
     @FXML
     private TextField Pasword;
     TextField l = new TextField("test");
+
     @FXML
     private void handleButtonAction(ActionEvent event) throws Exception {
-        
+
         UserService us = new UserService();
-               try {  
-                   User u = ServiceManager.getInstance().getUserService().login(Login.getText(), Pasword.getText());
-                   if(u !=  null)
-                   {
-                       UserManager.setUser(u);
-                   Parent root= FXMLLoader.load(getClass().getResource("Home.fxml"));
-                   Login.getScene().setRoot(root);
-                   }else{
-                       System.out.println("utilisateur introuvable");
-                   }
-                   
-               }catch (IOException ex) {
-                   ex.printStackTrace();
-                   System.out.println("failed");
-                   //Logger.getLogger(FXMLajoutController.class.getName()).log(Level.SEVERE, null, ex);
-               }
+        try {
+            User u = ServiceManager.getInstance().getUserService().login(Login.getText(), Pasword.getText());
+            if (u != null) {
+                UserManager.setUser(u);
+                Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
+                Stage s = new Stage();
+                Scene se = new Scene(root);
+                s.setScene(se);
+                Stage x = (Stage) Login.getScene().getWindow();
+                x.close();
+                s.show();
+            } else {
+                System.out.println("utilisateur introuvable");
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.out.println("failed");
+            //Logger.getLogger(FXMLajoutController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //Logger.getLogger(FXMLajoutController.class.getName()).log(Level.SEVERE, null, ex);
-        
+
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //container.getChildren().add(l);
         // TODO
-    }   
-    
+    }
+
 }
