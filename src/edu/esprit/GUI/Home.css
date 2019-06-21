@@ -1,0 +1,17 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.menu{
+    -fx-background-color: #0080FF
+}
+.menu-button{
+     -fx-widh: 100%;
+     
+     .screen{
+         -fx-background-color :#DF013A
+     }     
+}
