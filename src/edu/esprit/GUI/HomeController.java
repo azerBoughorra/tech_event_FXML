@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -31,6 +32,8 @@ public class HomeController implements Initializable {
     private VBox menu;
     @FXML
     private AnchorPane screen;
+    @FXML
+    private ImageView ProfileImg;
 
     /**
      * Initializes the controller class.
@@ -39,92 +42,16 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         menu.getStyleClass().add("menu");
-        Button bProfile = new Button("Profile");
-        bProfile.getStyleClass().add("menu-button");
-        bProfile.setMaxWidth(Double.MAX_VALUE);
-        bProfile.setMinHeight(50);
 
-        menu.getChildren().add(bProfile);
-
-        bProfile.setOnAction(e -> {
-            screen.getChildren().clear();
-            AnchorPane content = null;
-            try {
-                content = FXMLLoader.load(getClass().getResource("UserDetails.fxml"));
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            screen.getChildren().add(content);
-        });
-
-        Button bEventList = new Button("Liste des evennements");
-        bEventList.getStyleClass().add("menu-button");
-        bEventList.setMaxWidth(Double.MAX_VALUE);
-        bEventList.setMinHeight(50);
-
-        menu.getChildren().add(bEventList);
-
-        bEventList.setOnAction(e -> {
-            screen.getChildren().clear();
-            AnchorPane content = null;
-            try {
-                content = FXMLLoader.load(getClass().getResource("EventList.fxml"));
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            screen.getChildren().add(content);
-        });
-
-        Button bPlanning = new Button("Ma calendrier");
-        bPlanning.getStyleClass().add("menu-button");
-        bPlanning.setMaxWidth(Double.MAX_VALUE);
-        bPlanning.setMinHeight(50);
-
-        menu.getChildren().add(bPlanning);
-        bPlanning.setOnAction(e -> {
-            screen.getChildren().clear();
-            AnchorPane content = null;
-            try {
-                content = FXMLLoader.load(getClass().getResource("Calendar.fxml"));
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            screen.getChildren().add(content);
-        });
+        
+        menu.getChildren().add(createMenuButton("Profile", "UserDetails"));
+        menu.getChildren().add(createMenuButton("Liste des evennements", "EventList"));
+        menu.getChildren().add(createMenuButton("Ma calendrier", "Calendar"));
 
         if (UserManager.getUser().getRole().getId() == 1) {
-            Button bReclammation = new Button("Reclamations");
-            bReclammation.getStyleClass().add("menu-button");
-            bReclammation.setMaxWidth(Double.MAX_VALUE);
-            bReclammation.setMinHeight(50);
-            menu.getChildren().add(bReclammation);
-            bReclammation.setOnAction(e -> {
-                screen.getChildren().clear();
-                AnchorPane content = null;
-                try {
-                    content = FXMLLoader.load(getClass().getResource("Reports.fxml"));
-                } catch (IOException ex) {
-                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                screen.getChildren().add(content);
-            });
-
+            menu.getChildren().add(createMenuButton("Reclamations", "Reports"));
         } else if (UserManager.getUser().getRole().getId() == 3) {
-            Button bAddEvent = new Button("Creer evennement");
-            bAddEvent.getStyleClass().add("menu-button");
-            bAddEvent.setMaxWidth(Double.MAX_VALUE);
-            bAddEvent.setMinHeight(50);
-            menu.getChildren().add(bAddEvent);
-            bAddEvent.setOnAction(e -> {
-                screen.getChildren().clear();
-                AnchorPane content = null;
-                try {
-                    content = FXMLLoader.load(getClass().getResource("AddEvent.fxml"));
-                } catch (IOException ex) {
-                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                screen.getChildren().add(content);
-            });
+            menu.getChildren().add(createMenuButton("Creer evennement", "AddEvent"));
         }
 
         AnchorPane content = null;
@@ -135,6 +62,24 @@ public class HomeController implements Initializable {
         }
         screen.getChildren().add(content);
         // TODO
+    }
+
+    private Button createMenuButton(String label, String pageName) {
+        Button button = new Button(label);
+        button.getStyleClass().add("menu-button");
+        button.setMaxWidth(Double.MAX_VALUE);
+        button.setMinHeight(50);
+        button.setOnAction(e -> {
+            screen.getChildren().clear();
+            AnchorPane content = null;
+            try {
+                content = FXMLLoader.load(getClass().getResource(pageName + ".fxml"));
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            screen.getChildren().add(content);
+        });
+        return button;
     }
 
 }
