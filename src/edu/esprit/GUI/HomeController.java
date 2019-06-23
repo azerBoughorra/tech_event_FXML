@@ -51,7 +51,7 @@ public class HomeController implements Initializable {
         
         menu.getChildren().add(createMenuButton("Profile", "UserDetails"));
         menu.getChildren().add(createMenuButton("Liste des evennements", "EventList"));
-        menu.getChildren().add(createMenuButton("Ma calendrier", "Calendar"));
+        menu.getChildren().add(createMenuButton("Ma calendrier", "/academiccalendar/ui/main/FXMLDocument"));
 
         if (UserManager.getUser().getRole().getId() == 1) {
             menu.getChildren().add(createMenuButton("Reclamations", "Reports"));
