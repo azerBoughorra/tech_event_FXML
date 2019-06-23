@@ -43,7 +43,7 @@ public class SessionService  extends ServiceUtils implements ISessionService{
             ResultSet rs = executeSelect("select * from EVENT_SESSION where isdeleted=0");
             while (rs.next()) {
                 Session se = new Session(rs.getInt("EVENT_SESSION_ID_FK_PK"),
-                        rs.getDate("EVENT_SESSION_START_TIME"), rs.getDate("EVENT_SESSION_END_TIME_PK"), rs.getString("EVENT_SESSION_NAME"),
+                        rs.getTimestamp("EVENT_SESSION_START_TIME_PK"), rs.getTimestamp("EVENT_SESSION_END_TIME_PK"), rs.getString("EVENT_SESSION_NAME"),
                         rs.getString("EVENT_SESSION_DESCRIPTION")
                 );
                 l.add(se);
