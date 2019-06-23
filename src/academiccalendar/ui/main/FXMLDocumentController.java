@@ -1043,7 +1043,9 @@ public class FXMLDocumentController implements Initializable {
                 vPane.getStyleClass().add("calendar_pane");
                 vPane.setMinWidth(weekdayHeader.getPrefWidth()/7);
                 vPane.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-                    
+                     Label lbl = (Label) vPane.getChildren().get(0);
+                 Integer day =  Integer.parseInt(lbl.getText());
+                    System.out.println("date is : "+day+"/"+Model.getInstance().getMonthIndex(monthSelect.getSelectionModel().getSelectedItem())+"/"+selectedYear.getValue());
                     addEvent(vPane);
                 });
                 
