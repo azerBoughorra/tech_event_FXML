@@ -40,7 +40,7 @@ public class CategoryService extends ServiceUtils implements ICategoryService{
     public List<Category> findAll() {
   List<Category> ca = new ArrayList<>();
   try {
-            ResultSet rs = executeSelect("select * from event_category where isdelete=0");
+            ResultSet rs = executeSelect("select * from event_category where isdeleted=0");
             while (rs.next()) {
                 Category c = new Category(
                         rs.getInt("EVENT_CATEGORY_ID_PK"),
