@@ -8,16 +8,17 @@ package edu.esprit.GUI;
 import edu.esprit.models.Event;
 import edu.esprit.utils.ServiceManager;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -27,15 +28,15 @@ import javafx.scene.control.TextField;
 public class EventListController implements Initializable {
 
     @FXML
-    private TableView<?> personTable;
+    private TableView<Event> personTable;
     @FXML
-    private TableColumn<?, ?> titleColumn;
+    private TableColumn<Event, String> titleColumn;
     @FXML
-    private TableColumn<?, ?> categoryColumn;
+    private TableColumn<Event, String> categoryColumn;
     @FXML
-    private TableColumn<?, ?> etpColumn;
+    private TableColumn<Event, String> etpColumn;
     @FXML
-    private TableColumn<?, ?> dateColumn;
+    private TableColumn<Event, Date> dateColumn;
     @FXML
     private CheckBox myEvents;
     @FXML
@@ -50,8 +51,10 @@ public class EventListController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         // TODO
+        
         eventList.addAll(ServiceManager.getInstance().getEventService().findAll());
-        System.out.println(eventList);
+        personTable.setItems(eventList);
+        this.titleColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("title"));
     }
 
 }
