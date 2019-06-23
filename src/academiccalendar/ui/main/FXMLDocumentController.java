@@ -82,6 +82,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import edu.esprit.models.Event;
 import java.text.ParseException;
+import javafx.scene.control.Tooltip;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 public class FXMLDocumentController implements Initializable {
     
@@ -539,7 +542,7 @@ public class FXMLDocumentController implements Initializable {
         
         List<Event> le;
        
-        //le = ServiceManager.getInstance().getEventService().findAll();
+        le = ServiceManager.getInstance().getEventService().findAll();
         
         
         // Get viewing calendar
@@ -567,15 +570,19 @@ public class FXMLDocumentController implements Initializable {
                 Date edate = new java.sql.Date(01-01-2018);    
                 edate.setYear(new java.util.Date().getYear());
                 //edate.setYear(118);
-             //for(Event e : le){
-                 
+             for(Event e : le){
+                
                  // Get date for the event
                  //Date eventDate =  new java.sql.Date(e.getSessions().get(1).getStartTime().getTime());
-                 Date eventDate = edate;
-                 System.out.println(eventDate);
+                Date eventDate =  new java.sql.Date(e.getSessions().get(0).getStartTime().getTime());
+                String EventStartTime = new SimpleDateFormat("HH:mm").format(e.getSessions().get(0).getStartTime());
+                String EventEndTime = new SimpleDateFormat("HH:mm").format(e.getSessions().get(0).getEndTime());
+                 //Date eventDate = edate;
+                 //System.out.println(eventDate);
                  //result.getDate("EventDate");
                  //String eventDescript = e.getDescription();
-                 String eventDescript = "test youssef";
+                 String eventDescript = e.getDescription();
+                 System.out.println("event's description :   "+eventDescript);
                  int eventTermID = 1;
                  
                  // Check for year we have selected
@@ -587,14 +594,14 @@ public class FXMLDocumentController implements Initializable {
                         int day = eventDate.toLocalDate().getDayOfMonth();
 
                         // Display decription of the event given it's day
-                        showDate(edate,day, eventDescript, eventTermID);
+                        showDate(EventStartTime,EventEndTime,edate,day, eventDescript, eventTermID);
                     }         
                  }
-             //}
+             }
         
     }
     
-    public void showDate(Date eventDate,int dayNumber, String descript, int termID){
+    public void showDate(String EventStartTime,String EventEndTime,Date eventDate,int dayNumber, String descript, int termID){
         
         Image img = new Image(getClass().getClassLoader().getResourceAsStream("academiccalendar/ui/icons/icon2.png"));
         ImageView imgView = new ImageView();
@@ -630,6 +637,12 @@ public class FXMLDocumentController implements Initializable {
                         System.out.println("heeeey this is Event Date:   "+eventDate);
                         editEvent((VBox)eventLbl.getParent(), eventLbl.getText(), eventLbl.getAccessibleText());
                         
+                    });
+                   
+                    eventLbl.addEventHandler(MouseEvent.MOUSE_ENTERED, (e)->{
+                      Tooltip t=new Tooltip("from"+EventStartTime+"to"+EventEndTime);
+                      eventLbl.setTooltip(t);
+                       
                     });
                     
                     // Get term color from term's table
@@ -1031,7 +1044,7 @@ public class FXMLDocumentController implements Initializable {
                 vPane.setMinWidth(weekdayHeader.getPrefWidth()/7);
                 vPane.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                     
-                    //addEvent(vPane);
+                    addEvent(vPane);
                 });
                 
                 GridPane.setVgrow(vPane, Priority.ALWAYS);

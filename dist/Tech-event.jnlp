@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Tech-event.jar" size="227889" download="eager" />
+    <jar href="Tech-event.jar" size="227920" download="eager" />
     <jar href="lib\derby.jar" size="3230946" download="eager" />
     <jar href="lib\jfoenix.jar" size="2350676" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.23-bin.jar" size="834126" download="eager" />

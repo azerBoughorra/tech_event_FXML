@@ -46,6 +46,7 @@ public class LoginController implements Initializable {
         UserService us = new UserService();
                try {  
                    User u = ServiceManager.getInstance().getUserService().login(Login.getText(), Pasword.getText());
+                   
                    if(u !=  null)
                    {
                        UserManager.setUser(u);
