@@ -5,13 +5,16 @@
  */
 package edu.esprit.GUI;
 
-import edu.esprit.models.Event;
+import edu.esprit.services.implementation.UserService;
 import edu.esprit.utils.ServiceManager;
+import edu.esprit.utils.UserManager;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -19,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -28,21 +32,25 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class EventListController implements Initializable {
 
     @FXML
-    private TableView<Event> personTable;
+    private TableView<ObservableEvent> personTable;
     @FXML
-    private TableColumn<Event, String> titleColumn;
+    private TableColumn<ObservableEvent, String> titleColumn;
     @FXML
-    private TableColumn<Event, String> categoryColumn;
+    private TableColumn<ObservableEvent, String> categoryColumn;
     @FXML
-    private TableColumn<Event, String> etpColumn;
+    private TableColumn<ObservableEvent, String> etpColumn;
     @FXML
-    private TableColumn<Event, Date> dateColumn;
+    private TableColumn<ObservableEvent, Date> dateColumn;
     @FXML
     private CheckBox myEvents;
     @FXML
     private TextField filterField;
 
-    private ObservableList<Event> eventList = FXCollections.observableArrayList();
+    private ObservableList<ObservableEvent> allEventList = FXCollections.observableArrayList();
+    private ObservableList<ObservableEvent> eventList = FXCollections.observableArrayList();
+    private ObservableList<ObservableEvent> filtredEventList = FXCollections.observableArrayList();
+    @FXML
+    private AnchorPane filterInput;
 
     /**
      * Initializes the controller class.
@@ -50,11 +58,100 @@ public class EventListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        this.filterField.textProperty().addListener((observable, oldValue, newValue) -> this.onFilterChange());
         // TODO
-        
-        eventList.addAll(ServiceManager.getInstance().getEventService().findAll());
-        personTable.setItems(eventList);
-        this.titleColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("title"));
+        allEventList.addAll(ServiceManager.getInstance()
+                .getEventService()
+                .findAll()
+                .stream().map(e -> new ObservableEvent(e.getId(),
+                                e.getTitle(),
+                                e.getOrganisator().
+                                getEntreprise().getName(),
+                                e.getSessions().get(0).getStartTime(),
+                                e.getCategory().getName()))
+                .collect(Collectors.toList())
+        );
+        this.eventList.addAll(allEventList);
+        this.filtredEventList.addAll(eventList);
+        System.out.println(filtredEventList);
+        this.personTable.setItems(filtredEventList);
+        this.titleColumn.setCellValueFactory(new PropertyValueFactory<ObservableEvent, String>("title"));
+        this.etpColumn.setCellValueFactory(new PropertyValueFactory<ObservableEvent, String>("entrepriseName"));
+        this.dateColumn.setCellValueFactory(new PropertyValueFactory<ObservableEvent, Date>("eventDate"));
+        this.categoryColumn.setCellValueFactory(new PropertyValueFactory<ObservableEvent, String>("category"));
+
+    }
+
+    private void onFilterChange() {
+        this.filtredEventList.clear();
+        this.filtredEventList.addAll(this.eventList.stream()
+                .filter(e -> e.title.contains(this.filterField.getText())
+                        || e.category.contains(this.filterField.getText())
+                        || e.entrepriseName.contains(this.filterField.getText())
+                        || e.eventDate.toString().contains(this.filterField.getText())
+                )
+                .collect(Collectors.toList())
+        );
+    }
+
+    public void setFilter(String filter) {
+        this.filterField.setText(filter);
+    }
+
+    @FXML
+    private void onCheckboxChanged(ActionEvent event) {
+        if (this.myEvents.isSelected()) {
+            this.eventList.clear();
+            this.eventList.addAll(
+                    this.allEventList
+                    .stream()
+                    .filter(ev -> UserManager.getParticipation().stream().anyMatch(p -> p.getEventId() == ev.getId()))
+                    .collect(Collectors.toList())
+            );
+        } else {
+            this.eventList.clear();
+            this.eventList.addAll(this.allEventList);
+        }
+        this.onFilterChange();
+
+    }
+
+    public class ObservableEvent {
+
+        private int id;
+        private String title;
+        private String entrepriseName;
+        private Date eventDate;
+        private String category;
+
+        public ObservableEvent(int id, String title, String entrepriseName, Date eventDate, String category) {
+            this.id = id;
+            this.title = title;
+            this.entrepriseName = entrepriseName;
+            this.eventDate = eventDate;
+            this.category = category;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getEntrepriseName() {
+            return entrepriseName;
+        }
+
+        public Date getEventDate() {
+            return eventDate;
+        }
+
+        public String getCategory() {
+            return category;
+        }
+
     }
 
 }

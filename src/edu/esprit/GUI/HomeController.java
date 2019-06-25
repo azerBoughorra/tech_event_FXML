@@ -11,14 +11,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -48,7 +43,6 @@ public class HomeController implements Initializable {
 
         menu.getStyleClass().add("menu");
 
-        
         menu.getChildren().add(createMenuButton("Profile", "UserDetails"));
         menu.getChildren().add(createMenuButton("Liste des evennements", "EventList"));
         menu.getChildren().add(createMenuButton("Ma calendrier", "Calendar"));
@@ -61,6 +55,11 @@ public class HomeController implements Initializable {
 
         AnchorPane content = null;
         try {
+            /* FXMLLoader loader = new FXMLLoader(getClass().getResource("EventList.fxml"));
+             Parent root = loader.load();
+             EventListController controller = loader.<EventListController>getController();
+             controller.setFilter("dssd");
+             content = (AnchorPane) root;*/
             content = FXMLLoader.load(getClass().getResource("EventList.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
