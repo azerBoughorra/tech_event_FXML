@@ -14,11 +14,11 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import org.controlsfx.control.Rating;
 
 /**
  * FXML Controller class
@@ -41,12 +41,11 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         menu.getStyleClass().add("menu");
 
         menu.getChildren().add(createMenuButton("Profile", "UserDetails"));
         menu.getChildren().add(createMenuButton("Liste des evennements", "EventList"));
-        menu.getChildren().add(createMenuButton("Ma calendrier", "Calendar"));
+        menu.getChildren().add(createMenuButton("Ma calendrier", "/academiccalendar/ui/main/FXMLDocument"));
 
         if (UserManager.getUser().getRole().getId() == 1) {
             menu.getChildren().add(createMenuButton("Reclamations", "Reports"));
