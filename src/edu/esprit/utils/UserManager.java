@@ -5,15 +5,28 @@
  */
 package edu.esprit.utils;
 
+import edu.esprit.models.Participation;
 import edu.esprit.models.User;
+import java.util.List;
 
 /**
  *
  * @author yjaballi
  */
 public class UserManager {
-     private static User user;
-    private UserManager(){   
+
+    private static User user;
+    private static List<Participation> participation;
+
+    private UserManager() {
+    }
+
+    public static List<Participation> getParticipation() {
+        return participation;
+    }
+
+    public static void setParticipation(List<Participation> participation) {
+        UserManager.participation = participation;
     }
 
     public static User getUser() {
@@ -23,5 +36,5 @@ public class UserManager {
     public static void setUser(User user) {
         UserManager.user = user;
     }
-    
+
 }

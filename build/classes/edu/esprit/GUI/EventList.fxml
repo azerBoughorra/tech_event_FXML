@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="edu.esprit.GUI.EventListController">
+<AnchorPane id="AnchorPane" fx:id="filterInput" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="edu.esprit.GUI.EventListController">
   <children>
     <TableView fx:id="personTable" prefHeight="-1.0" prefWidth="-1.0" tableMenuButtonVisible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
       <columnResizePolicy>
@@ -21,7 +21,7 @@
     </TableView>
     <HBox id="HBox" alignment="CENTER" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
       <children>
-        <CheckBox fx:id="myEvents" mnemonicParsing="false" text="Mes evennements" />
+        <CheckBox fx:id="myEvents" mnemonicParsing="false" onAction="#onCheckboxChanged" text="Mes evennements" />
         <Label text="Filter Table:" />
         <TextField fx:id="filterField" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
       </children>
