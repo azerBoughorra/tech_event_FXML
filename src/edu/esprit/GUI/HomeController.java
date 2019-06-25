@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -55,7 +56,10 @@ public class HomeController implements Initializable {
 
         AnchorPane content = null;
         try {
-            /* FXMLLoader loader = new FXMLLoader(getClass().getResource("EventList.fxml"));
+             /*
+            set parameter to FXML page
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EventList.fxml"));
              Parent root = loader.load();
              EventListController controller = loader.<EventListController>getController();
              controller.setFilter("dssd");
