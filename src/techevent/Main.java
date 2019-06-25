@@ -21,9 +21,7 @@ public class Main {
      */
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
-
-  
-        System.out.println(ServiceManager.getInstance().getUserService().findAll());
+        System.out.println(ServiceManager.getInstance().getEventService().findAll());
     }
 
 }

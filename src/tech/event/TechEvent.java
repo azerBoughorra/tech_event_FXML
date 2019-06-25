@@ -22,7 +22,8 @@ public class TechEvent extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/edu/esprit/GUI/Login.fxml"));
         
         Scene scene = new Scene(root);
-        
+        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        stage.sizeToScene();
         stage.setScene(scene);
         stage.show();
     }
