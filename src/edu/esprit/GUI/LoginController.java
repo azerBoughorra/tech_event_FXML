@@ -52,6 +52,7 @@ public class LoginController implements Initializable {
             User u = ServiceManager.getInstance().getUserService().login(Login.getText(), Pasword.getText());
             if (u != null) {
                 UserManager.setUser(u);
+                UserManager.setParticipation(ServiceManager.getInstance().getParticipationService().findByUser(u.getId()));
                 Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
                 Stage s = new Stage();
                 Scene se = new Scene(root);
