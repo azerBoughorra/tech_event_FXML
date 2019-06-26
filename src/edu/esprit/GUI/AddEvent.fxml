@@ -7,8 +7,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.esprit.GUI.AddEventController">
-    <stylesheets>
-        <URL value="@addevent.css"/>
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="edu.esprit.GUI.AddEventController">
+  <children>
+    <AnchorPane fx:id="mapCont" layoutX="386.0" layoutY="35.0" prefHeight="200.0" prefWidth="200.0" />
+  </children>
+  <stylesheets>
+    <URL value="@addevent.css" />
+  </stylesheets>
 </AnchorPane>
